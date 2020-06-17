@@ -1,0 +1,29 @@
+
+
+class Config(object):
+    DEBUG = False
+    TESTING = False
+    SECRET_KEY = b'$^\x8aF\x92\xf3\xf4\x12\xf9}n\x93L\x17m_m\xbf\xb1\x92\xf6*^\xb1^\x95t\x93\xd0~\t\xf0'
+
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///instance/prod-db.sqlite'
+
+    IMAGE_UPLOADS = ""
+
+    REMEBER_COOKIE_HTTPONLY = True
+    REMEMBER_COOKIE_SECURE = True
+
+class ProdConfig(Config):
+    pass
+
+class DevConfig(Config):
+    DEBUG = True
+
+    SECRET_KEY = b"\x13\xe4-\xd6\xba\xb4\x14\x12b4\xde\xd0\xd4\r%QA\xd1\x04\x061\xe6\xaf\x8b\x90s\x1cU'%\xa7\xef"
+
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///instance/db.sqlite'
+
+    REMEBER_COOKIE_HTTPONLY = False
+    REMEMBER_COOKIE_SECURE = False
+
+class TestConfig(Config):
+    TESTING = True
