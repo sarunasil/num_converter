@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, logout_user, login_required
 
 from . import db
 from .models import User
@@ -22,7 +23,7 @@ def login_post():
         flash('Incorrect login details.')
         return redirect(url_for('auth.login'))
 
-
+    login_user(user, remember=remember)
     return redirect(url_for('main.profile'))
 
 @auth.route('/register')
@@ -51,5 +52,8 @@ def register_post():
 
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return 'Logout'
+    logout_user()
+    return redirect( url_for('main.index'))
+
