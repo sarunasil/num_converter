@@ -131,3 +131,4 @@ dmypy.json
 environment
 .vscode
 *.sqlite
+old_proj

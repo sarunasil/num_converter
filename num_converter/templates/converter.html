@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head >
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>LUTEX</title>
+</head>
+
+
+<body>
+    <header>
+        <h3 id="programName">LUTEX NUMERIŲ KONVERTAVIMO PROGRAMA</h3>
+        <a href="{{ url_for('main.index') }}">
+            <img id="LogoBtn"  src="{{ url_for('static', filename='img/logo.png') }}" />
+        </a>
+    </header>
+    <main>
+        {% if before_size %}
+            <div id="itemsCount">
+                <div id="itemsCountLeft" class="clearfix">
+                    <p id="nr_count">
+                        Rasta numerių:<label id="Label2">{{before_size}}</label>
+                    </p>
+                </div>
+                <div id="itemsCountRight" class="clearfix">
+                    <p id="convert_count">Konvertuota numerių:<label id="Label3">{{after_size}}</label>
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+
+        <div id="buttons">
+            <div id="smthg">
+
+                <form action="{{ url_for('main.converter') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="file" name="file" accept=".txt, .xls, .xlsx, .doc, .docx" id="File_upload"  class="btn" Height="38px" />
+                    <button type="submit" class="btn" id="Btn_load" OnClick="Btn_press_Click">Įkelti</button>
+                </form>
+            </div>
+            <div>
+                <form action="/converter" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="checkbox" id="quietCheckBX"   checked="true" OnCheckedChanged="quietCheckBX_CheckedChanged" >
+                    <label for="quietCheckBX">Nerodyti numerių (pagreitina konvertavimą)</label>
+                    <button type="submit" class="btn" id="btn_convert" Width="113px" OnClick="btn_convert_Click">Konvertuoti</button>
+                </form>
+            </div>
+            <div id="save_div" >
+                <form action="/converter" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit" id="btn_save" class="btn"  OnClick="Button1_Click" width="92px">"Išsaugoti"</button>
+
+                    <label for="drop_down_list" id="LabelChoose" Height="25px">Pasirinkite saugojimo formatą</label>
+                    <select name="format" id="drop_down_list"  Width="75">
+                        <option value="xlsx">xlsx</option>
+                        <option value="xls">xls</option>
+                        <option value="txt">txt</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer >
+        <hr/>
+        <button id="SwapBtn" style="font-family:'Times New Roman';font-size:x-large" OnClick="SwapBtn_Click">Eiti į 'šveplinimo' puslapį</button>
+    </footer>
+</body>
+</html>

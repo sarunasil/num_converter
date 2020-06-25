@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="column is-4 is-offset-4">
+<div class="LoginBody">
+    <a href="{{ url_for('main.index') }}">
+        <img id="LogoBtn"  src="{{ url_for('static', filename='img/logo.png') }}" />
+    </a>
     <h3 class="title">Login</h3>
     <div class="box">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -13,26 +16,17 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <form method="POST" action="/login">
+        <form method="POST" action="/login" id="LoginForm">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="username" placeholder="Username" autofocus="">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Your Password">
-                </div>
-            </div>
-            <div class="field">
+            <div class="Login1">
+                <input type="text" name="username" placeholder="Username" autofocus="">
+                <input type="password" name="password" placeholder="Your Password">
                 <label class="checkbox">
                     <input type="checkbox" name="remember">
                     Remember me
                 </label>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+            <button>Login</button>
         </form>
     </div>
 </div>
