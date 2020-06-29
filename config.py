@@ -7,7 +7,7 @@ class Config(object):
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///instance/prod-db.sqlite'
 
-    UPLOAD_FOLDER = "./uploads"
+    UPLOAD_FOLDER = "uploads"
 
     REMEBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_SECURE = True

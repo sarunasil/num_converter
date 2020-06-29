@@ -41,24 +41,16 @@
                     <button type="submit" class="btn" id="Btn_load" OnClick="Btn_press_Click">Įkelti</button>
                 </form>
             </div>
-            <div>
-                <form action="/converter" method="POST">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input type="checkbox" id="quietCheckBX"   checked="true" OnCheckedChanged="quietCheckBX_CheckedChanged" >
-                    <label for="quietCheckBX">Nerodyti numerių (pagreitina konvertavimą)</label>
-                    <button type="submit" class="btn" id="btn_convert" Width="113px" OnClick="btn_convert_Click">Konvertuoti</button>
-                </form>
-            </div>
             <div id="save_div" >
-                <form action="/converter" method="POST">
+                <form action="/download" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <button type="submit" id="btn_save" class="btn"  OnClick="Button1_Click" width="92px">"Išsaugoti"</button>
+                    <button type="submit" id="btn_save" class="btn" width="92px">Išsaugoti</button>
 
                     <label for="drop_down_list" id="LabelChoose" Height="25px">Pasirinkite saugojimo formatą</label>
                     <select name="format" id="drop_down_list"  Width="75">
+                        <option value="txt" selected="selected">txt</option>
                         <option value="xlsx">xlsx</option>
                         <option value="xls">xls</option>
-                        <option value="txt">txt</option>
                     </select>
                 </form>
             </div>

@@ -1,6 +1,7 @@
-from os.path import join, splitext
+from os import remove, getcwd
+from os.path import join, splitext, exists, basename
 
-from flask import Blueprint, render_template, url_for, request, redirect, current_app, flash, session
+from flask import Blueprint, render_template, url_for, request, redirect, current_app, flash, session, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 
@@ -65,10 +66,23 @@ def converter_post():
         ofilepath = f"{splitext(filepath)[0]}_converted.txt"
         with open(ofilepath, 'w') as ofile:
             ofile.writelines(converted)
-        session['ofilepath'] = ofilepath
+
+        #delete prev file
+        remove(filepath)
+
+        session['ofilepath'] = basename(ofilepath)
 
         return render_template('converter.html', before_size=len(content), after_size=len(converted))
 
     return redirect(url_for('main.converter'))
 
+@main.route('/download', methods=["POST"])
+def download():
 
+    if session['ofilepath']:
+        uploads = join(getcwd(), current_app.config['UPLOAD_FOLDER'])
+
+        if exists( join(uploads, session['ofilepath'])):
+            return send_from_directory(directory=uploads, filename=session['ofilepath'])
+        else:
+            return "Error occurred. Seems the input file was not converted properly. Try again"
