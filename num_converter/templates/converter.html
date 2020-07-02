@@ -18,11 +18,18 @@
         </a>
     </header>
     <main>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
         {% if before_size %}
             <div id="itemsCount">
                 <div id="itemsCountLeft" class="clearfix">
                     <p id="nr_count">
-                        Rasta numerių:<label id="Label2">{{before_size}}</label>
+                        Rasta įrašų:<label id="Label2">{{before_size}}</label>
                     </p>
                 </div>
                 <div id="itemsCountRight" class="clearfix">
@@ -46,7 +53,7 @@
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <button type="submit" id="btn_save" class="btn" width="92px">Išsaugoti</button>
 
-                    <label for="drop_down_list" id="LabelChoose" Height="25px">Pasirinkite saugojimo formatą</label>
+                    <label for="drop_down_list" id="LabelChoose" Height="25px">Saugojimo formatas</label>
                     <select name="format" id="drop_down_list"  Width="75">
                         <option value="txt" selected="selected">txt</option>
                         <option value="xlsx">xlsx</option>

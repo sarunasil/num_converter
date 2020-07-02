@@ -5,9 +5,9 @@ from flask import Blueprint, render_template, url_for, request, redirect, curren
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 
-from .utils import convert
+from .utils import convert, read_txt, read_excel, read_word
 
-ALLOWED_EXTENSIONS = {'txt', 'xls' }
+ALLOWED_EXTENSIONS = {'txt', 'xls', 'xlsx', 'docx' }
 
 main = Blueprint('main', __name__)
 
@@ -32,13 +32,6 @@ def converter():
 def allowed_file(filename):
     return '.' in filename and filename.split('.')[-1] in ALLOWED_EXTENSIONS
 
-def read_txt(filepath):
-    lines = []
-    with open(filepath, 'r') as file1:
-        lines = file1.readlines()
-
-    return lines
-
 @main.route('/converter', methods=["POST"])
 def converter_post():
     if 'file' not in request.files:
@@ -58,14 +51,17 @@ def converter_post():
         content=""
         if filename.endswith('txt'):
             content = read_txt(filepath)
-        elif filename.endswith('xls'):
-            pass
+        elif filename.endswith('xls') or filename.endswith('xlsx'):
+            content = read_excel(filepath)
+        elif filename.endswith('doc') or filename.endswith('docx'):
+            content = read_word(filepath)
 
         converted = convert(content)
 
         ofilepath = f"{splitext(filepath)[0]}_converted.txt"
         with open(ofilepath, 'w') as ofile:
-            ofile.writelines(converted)
+            for number in converted:
+                ofile.write("%s\n" % number)
 
         #delete prev file
         remove(filepath)
@@ -73,6 +69,8 @@ def converter_post():
         session['ofilepath'] = basename(ofilepath)
 
         return render_template('converter.html', before_size=len(content), after_size=len(converted))
+    else:
+        flash(f'Provide file of accepted format: {", ".join(ALLOWED_EXTENSIONS)}.' )
 
     return redirect(url_for('main.converter'))
 
@@ -83,6 +81,6 @@ def download():
         uploads = join(getcwd(), current_app.config['UPLOAD_FOLDER'])
 
         if exists( join(uploads, session['ofilepath'])):
-            return send_from_directory(directory=uploads, filename=session['ofilepath'])
+            return send_from_directory(directory=uploads, filename=session['ofilepath'], as_attachment=True)
         else:
             return "Error occurred. Seems the input file was not converted properly. Try again"
