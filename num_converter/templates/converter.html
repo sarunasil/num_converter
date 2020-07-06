@@ -19,11 +19,11 @@
     </header>
     <main>
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
+        {% for msg in messages: %}
             <div class="notification is-danger">
-                {{ messages[0] }}
+                {{ msg }}
             </div>
-        {% endif %}
+        {% endfor %}
         {% endwith %}
         {% if before_size %}
             <div id="itemsCount">
@@ -40,27 +40,32 @@
         {% endif %}
 
         <div id="buttons">
-            <div id="smthg">
 
+            <div id="smthg" >
                 <form action="{{ url_for('main.converter') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input type="file" name="file" accept=".txt, .xls, .xlsx, .doc, .docx" id="File_upload"  class="btn" Height="38px" />
-                    <button type="submit" class="btn" id="Btn_load" OnClick="Btn_press_Click">Įkelti</button>
-                </form>
-            </div>
-            <div id="save_div" >
-                <form action="/download" method="POST">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <button type="submit" id="btn_save" class="btn" width="92px">Išsaugoti</button>
-
-                    <label for="drop_down_list" id="LabelChoose" Height="25px">Saugojimo formatas</label>
-                    <select name="format" id="drop_down_list"  Width="75">
-                        <option value="txt" selected="selected">txt</option>
-                        <option value="xlsx">xlsx</option>
-                        <option value="xls">xls</option>
+                    <input type="file" name="file" accept="{{ '.'+', .'.join(allowed_extensions) }}" id="File_upload" {% if before_size %} disabled {% endif %} class="btn" Height="38px" />
+                    <label for="drop_down_list" id="LabelChoose" height="25px">Saugojimo formatas</label>
+                    <select name="export_format" id="drop_down_list" width="75" {% if before_size %} disabled {% endif %}>
+                        {% for output_f in export_formats %}
+                            <option value={{output_f}} {%if output_f == selected_format %} selected="selected" {% endif %} >{{output_f}}</option>
+                        {% endfor %}
                     </select>
+                    <button type="submit" class="btn" id="Btn_load" OnClick="Btn_press_Click"{% if before_size %} disabled {% endif %}>Įkelti</button>
                 </form>
             </div>
+
+            <div id="save_div" {% if not before_size %} style="display:none" {% endif %} >
+                <form name="save_form" action="/download" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                    <button type="submit" id="btn_save" class="btn" width="92px">Išsaugoti</button>
+                </form>
+            </div>
+        <form action="/reset_form" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="submit" id="btn_reset" class="btn" width="92px">Reset</button>
+        </form>
         </div>
     </main>
 

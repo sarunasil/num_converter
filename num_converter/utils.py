@@ -2,6 +2,7 @@ import re
 
 import pandas
 import textract
+import docx
 
 #Clean up numbers
 def _remove_gaps_in_number(line):
@@ -27,7 +28,6 @@ def _extract_numbers(line):
     return _normalize_numbers(numbers)
 
 def convert(lines):
-
     conv_numbers = set()
     for line in lines:
 
@@ -39,7 +39,7 @@ def convert(lines):
     return conv_numbers
 
 
-#Read txt
+#Read TXT
 def read_txt(filepath):
     lines = []
     with open(filepath, 'r') as file1:
@@ -66,3 +66,24 @@ def read_word(filepath):
 
     return lines
 
+#Write TXT
+def write_txt(ofilepath, content):
+    with open(ofilepath, 'w') as ofile:
+        for number in content:
+            ofile.write("%s\n" % number)
+
+#Write EXCEL
+def write_excel(ofilepath, content):
+    df = pandas.DataFrame(list(content))
+    writer = pandas.ExcelWriter(ofilepath, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='Sheet1', header=False, index=False)
+
+    writer.save()
+
+#Write WORD
+def write_word(ofilepath, content):
+    document = docx.Document()
+    for number in content:
+        document.add_paragraph(number)
+
+    document.save(ofilepath)
