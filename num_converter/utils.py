@@ -8,7 +8,9 @@ import docx
 def _remove_gaps_in_number(line):
     #remove gaps inside of the number
     try:
-        cline = re.sub('(?<=[\d])[\D]+(?=[\d]{1,8}(\D|$))', '', line)
+        #Well... it looks ugly because python regex only supports fixed size lookbehinds
+        #essentially it's this: (?<=(\D|^)[\d]{1,8})(\D+)(?=[\d]{1,8}(\D|$))
+        cline = re.sub('((?<=^\d{8})|(?<=^\d{7})|(?<=^\d{6})|(?<=^\d{5})|(?<=^\d{4})|(?<=^\d{3})|(?<=^\d{2})|(?<=^\d)|(?<=\D\d{8})|(?<=\D\d{7})|(?<=\D\d{6})|(?<=\D\d{5})|(?<=\D\d{4})|(?<=\D\d{3})|(?<=\D\d{2})|(?<=\D\d))\D+(?=[\d]{1,8}(\D|$))', '', line)
     except e:
         print(e)
 
@@ -22,8 +24,9 @@ def _normalize_numbers(numbers):
     return res
 
 def _extract_numbers(line):
-    #6+digit*7
-    numbers = re.findall("6[\d]{7}(?=\D|$)", line)
+    #Find all 6+digit*7
+    #essentially it's just (?<=(^|\D)370|(^|\D)8|^|\D)6[\d]{7}(?=\D|$)
+    numbers = re.findall("(?:(?<=\D370)|(?<=\D8)|(?<=^370)|(?<=^8)|(?<=^)|(?<=\D))6[\d]{7}(?=\D|$)", line)
 
     return _normalize_numbers(numbers)
 
@@ -41,9 +44,8 @@ def convert(lines):
 
 #Read TXT
 def read_txt(filepath):
-    lines = []
     with open(filepath, 'r') as file1:
-        lines = file1.readlines()
+        lines = set(file1.readlines())
 
     return lines
 
@@ -51,7 +53,7 @@ def read_txt(filepath):
 #Read XLSX/XLS
 def read_excel(filepath):
     cells = set()
-    xl = pandas.read_excel(filepath, sheet_name=None)
+    xl = pandas.read_excel(filepath, sheet_name=None, header=None)
 
     for sheet_name in xl:
         cells |= { str(cell) for cell in xl[sheet_name].values.flatten() if cell==cell}
