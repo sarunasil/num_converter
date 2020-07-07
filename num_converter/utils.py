@@ -44,7 +44,7 @@ def convert(lines):
 
 #Read TXT
 def read_txt(filepath):
-    with open(filepath, 'r') as file1:
+    with open(filepath, 'r', errors='replace') as file1:
         lines = set(file1.readlines())
 
     return lines

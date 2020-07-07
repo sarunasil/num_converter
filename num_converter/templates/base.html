@@ -29,7 +29,7 @@
                             </a>
                             {% endif %}
                             {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('main.converter') }}" class="navbar-item">
+                            <a href="{{ url_for('conv.converter') }}" class="navbar-item">
                                 Converter
                             </a>
                             {% endif %}
@@ -38,14 +38,19 @@
                                 Šveplinimas
                             </a>
                             {% endif %}
+                            {% if current_user.is_authenticated and current_user.typee == 1 %}
+                            <a href="{{ url_for('admin.admin') }}" class="navbar-item">
+                                Admin
+                            </a>
+                            {% endif %}
                             {% if not current_user.is_authenticated %}
                             <a href="{{ url_for('auth.login') }}" class="navbar-item">
                                 Login
                             </a>
                             {% endif %}
-                            {% if not current_user.is_authenticated %}
+                            {% if current_user.is_authenticated and current_user.typee == 1 %}
                             <a href="{{ url_for('auth.register') }}" class="navbar-item">
-                                Register
+                                Register new user
                             </a>
                             {% endif %}
                             {% if current_user.is_authenticated %}
@@ -60,8 +65,18 @@
         </div>
 
         <div>
-               {% block content %}
-               {% endblock %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="notification {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}
+            {% endblock %}
         </div>
     </section>
 </body>

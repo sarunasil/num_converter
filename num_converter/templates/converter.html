@@ -9,13 +9,6 @@
         </a>
     </header>
     <main>
-        {% with messages = get_flashed_messages() %}
-        {% for msg in messages: %}
-            <div class="notification is-danger">
-                {{ msg }}
-            </div>
-        {% endfor %}
-        {% endwith %}
         {% if before_size %}
             <div id="itemsCount">
                 <div id="itemsCountLeft" class="clearfix">
@@ -33,7 +26,7 @@
         <div id="buttons">
 
             <div id="smthg" >
-                <form action="{{ url_for('main.converter') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url_for('conv.converter') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <input type="file" name="file" accept="{{ '.'+', .'.join(allowed_extensions) }}" id="File_upload" {% if before_size %} disabled {% endif %} class="btn" Height="38px" />
                     <label for="drop_down_list" id="LabelChoose" height="25px">Saugojimo formatas</label>
@@ -59,10 +52,5 @@
         </form>
         </div>
     </main>
-
-    <footer >
-        <hr/>
-        <button id="SwapBtn" style="font-family:'Times New Roman';font-size:x-large" OnClick="SwapBtn_Click">Eiti į 'šveplinimo' puslapį</button>
-    </footer>
 </body>
 {% endblock %}

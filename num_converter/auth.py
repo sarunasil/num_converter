@@ -33,10 +33,20 @@ def login_post():
 
 @auth.route('/register')
 def register():
+    #only admin can register new users
+    if current_user.typee != 1:
+        flash("Only admin can register new users")
+        return redirect(url_for('main.index'))
+
     return render_template('auth/register.html')
 
 @auth.route('/register', methods=['POST'])
 def register_post():
+    #only admin can register new users
+    if current_user.typee != 1:
+        flash("Only admin can register new users")
+        return redirect(url_for('main.index'))
+
     username = request.form.get('username')
     password = request.form.get('password1')
     password2 = request.form.get('password2')
@@ -71,4 +81,3 @@ def register_post():
 def logout():
     logout_user()
     return redirect( url_for('main.index'))
-
