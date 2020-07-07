@@ -38,4 +38,12 @@ def create_app():
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    #blueprint for converter
+    from .converter import conv as converter_blueprint
+    app.register_blueprint(converter_blueprint)
+
+    #blueprint for admin
+    from .admin import adm as admin_blueprint
+    app.register_blueprint(admin_blueprint)
+
     return app

@@ -13,7 +13,8 @@ class Config(object):
     REMEMBER_COOKIE_SECURE = True
 
 class ProdConfig(Config):
-    pass
+    DEFAULT_USER = 'admin'
+    DEFAULT_PASSWORD = None #change this on prod. Will break
 
 class DevConfig(Config):
     DEBUG = True
@@ -24,6 +25,9 @@ class DevConfig(Config):
 
     REMEBER_COOKIE_HTTPONLY = False
     REMEMBER_COOKIE_SECURE = False
+
+    DEFAULT_USER = 'admin'
+    DEFAULT_PASSWORD = 'admin'
 
 class TestConfig(Config):
     TESTING = True
