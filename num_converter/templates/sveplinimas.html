@@ -1,0 +1,31 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/sveplintojas.js') }}"></script>
+
+<body>
+    <header>
+        <h3 id="programName">LUTEX "ŠVEPLINIMO" PROGRAMA</h3>
+        <a href="{{ url_for('main.index') }}">
+            <img id="LogoBtn"  src="{{ url_for('static', filename='img/logo.png') }}" />
+        </a>
+    </header>
+
+    <main id="Main">
+        <div id="itemsCount">
+            <div id="lettersCountLeft" class="clearfix">
+                <p id="letter_count">Jūsų tekstas:<label ID="Label2">0</label></p>
+                <textarea class="letterBox" id="TextBoxIn" onkeyup="sveplinti()"></textarea>
+            </div>
+            <div id="lettersCountRight" class="clearfix">
+                <p id="letter_count2">"Sušveplintas" tekstas:<label id="Label3">0<label></p>
+                <textarea class="letterBox" id="TextBoxOut" ReadOnly="true" onfocus="copy()"></textarea>
+            </div>
+        </div>
+
+        <div id="buttonSveplint">
+            <button class="btn" id="btn_convert" Width="250px" Height="50px" onclick="copy()">Kopijuoti</button>
+        </div>
+    </main>
+</body>
+{% endblock %}

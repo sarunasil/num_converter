@@ -109,3 +109,8 @@ def reset():
         os.remove(join(current_app.config['UPLOAD_FOLDER'], f))
 
     return redirect(url_for('main.converter'))
+
+
+@main.route('/sveplinimas', methods=['GET'])
+def sveplinimas():
+    return render_template('sveplinimas.html')

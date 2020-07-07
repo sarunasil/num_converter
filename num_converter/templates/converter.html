@@ -1,15 +1,6 @@
-﻿<!DOCTYPE html>
+﻿{% extends "base.html" %}
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head >
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <title>LUTEX</title>
-</head>
-
-
+{% block content %}
 <body>
     <header>
         <h3 id="programName">LUTEX NUMERIŲ KONVERTAVIMO PROGRAMA</h3>
@@ -74,4 +65,4 @@
         <button id="SwapBtn" style="font-family:'Times New Roman';font-size:x-large" OnClick="SwapBtn_Click">Eiti į 'šveplinimo' puslapį</button>
     </footer>
 </body>
-</html>
+{% endblock %}
