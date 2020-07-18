@@ -1,0 +1,22 @@
+
+/* login */
+#login .container #login-row #login-column #login-box {
+  max-width: 600px;
+  height: 320px;
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+
+.btn{
+  font-size: 20px;
+}
+
+.text-info {
+  color: black;
+}

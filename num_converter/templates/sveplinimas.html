@@ -1,6 +1,7 @@
 ﻿{% extends "base.html" %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sveplinimas.css') }}">
 <script type="text/javascript" src="{{ url_for('static', filename='scripts/sveplintojas.js') }}"></script>
 
 <body>
@@ -13,11 +14,11 @@
 
     <main id="Main">
         <div id="itemsCount">
-            <div id="lettersCountLeft" class="clearfix">
+            <div id="lettersCountLeft">
                 <p id="letter_count">Jūsų tekstas:<label ID="Label2">0</label></p>
                 <textarea class="letterBox" id="TextBoxIn" onkeyup="sveplinti()"></textarea>
             </div>
-            <div id="lettersCountRight" class="clearfix">
+            <div id="lettersCountRight">
                 <p id="letter_count2">"Sušveplintas" tekstas:<label id="Label3">0<label></p>
                 <textarea class="letterBox" id="TextBoxOut" ReadOnly="true" onfocus="copy()"></textarea>
             </div>

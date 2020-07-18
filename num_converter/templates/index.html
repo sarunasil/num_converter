@@ -1,10 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Flask Login Example
-</h1>
-<h2 class="subtitle">
-  Easy authentication and authorization in Flask.
-</h2>
+<div class="content">
+    <header>
+        <h3 id="programName">LUTEX NUMERIŲ KONVERTAVIMO PROGRAMA</h3>
+        <a href="{{ url_for('main.index') }}">
+            <img id="LogoBtn"  src="{{ url_for('static', filename='img/logo.png') }}" />
+        </a>
+    </header>
+    <main>
+        <h3>
+        Norėdami naudotis programa, prisijunkite.
+        </h3>
+    </main>
+</div>
 {% endblock %}

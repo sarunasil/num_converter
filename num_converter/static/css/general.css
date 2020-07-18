@@ -19,6 +19,7 @@ nav.navbar{
     border: none;
     font-size: large;
     margin-bottom: 0;
+    color: black;
 }
 
 .navbar-brand{
@@ -57,4 +58,9 @@ nav.navbar{
 .alert-none {
     border-style: none;
     visibility: hidden;
+}
+
+/* index page */
+main > h3{
+    text-align: center;
 }

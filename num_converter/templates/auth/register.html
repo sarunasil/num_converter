@@ -1,30 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="column is-4 is-offset-4">
-    <h3 class="title">Register</h3>
-    <div class="box">
-        <form method="POST" action="/register">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="username" placeholder="Username" autofocus="">
-                </div>
-            </div>
+<form class="form-horizontal" action='/register' method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <fieldset>
+        <div id="legend">
+        <legend class="">Naujo vartotojo registracija</legend>
+        </div>
+        <div class="control-group">
+        <!-- Username -->
+        <label class="control-label"  for="username">Vartotojo vardas</label>
+        <div class="controls">
+            <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+        </div>
+        </div>
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password1" placeholder="Password">
-                </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password2" placeholder="Password">
-                </div>
-            </div>
+        <div class="control-group">
+        <!-- Password-->
+        <label class="control-label" for="password">Slaptažodis</label>
+        <div class="controls">
+            <input type="password" id="password" name="password1" placeholder="" class="input-xlarge">
+            <p class="help-block">Slaptažodis turi būti bent 8 simbolių ilgio</p>
+        </div>
+        </div>
 
-            <button class="button is-block is-info is-large is-fullwidth">Register</button>
-        </form>
-    </div>
-</div>
+        <div class="control-group">
+        <!-- Password -->
+        <label class="control-label"  for="password2">Slaptažodis (pakartoti)</label>
+        <div class="controls">
+            <input type="password" id="password2" name="password2" placeholder="" class="input-xlarge">
+        </div>
+        </div>
+
+        <div class="control-group">
+        <!-- Button -->
+        <div class="controls">
+            <button class="btn">Registruoti</button>
+        </div>
+        </div>
+    </fieldset>
+</form>
+
 {% endblock %}

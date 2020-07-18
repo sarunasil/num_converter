@@ -54,7 +54,7 @@ def converter_post():
         except Exception as e:
             content = set()
             converted = set()
-            flash("Failed to read or convert the file. Try again", 'alert-info')
+            flash("Įvyko klaida, nebuvo įmanoma perskaityti įkelto failo. Pabandykite dar kartą.", 'alert-info')
 
 
         ofilepath = f"{splitext(filepath)[0]}_converted.{export_format}"
@@ -66,7 +66,7 @@ def converter_post():
             elif export_format == 'docx':
                 write_word(ofilepath, converted)
         except:
-            flash("Failed to save converted file. Try again", 'alert-info')
+            flash("Nepavyko išsaugoti konvertuoto failo. Pabandykite dar kartą.", 'alert-info')
 
         #delete prev file
         os.remove(filepath)
@@ -75,7 +75,7 @@ def converter_post():
 
         return render_template('converter.html', export_formats=EXPORT_FORMATS, allowed_extensions=ALLOWED_EXTENSIONS, before_size=len(content), after_size=len(converted), selected_format=export_format)
     else:
-        flash(f'Provide file of accepted format: {", ".join(ALLOWED_EXTENSIONS)}.', 'alert-info')
+        flash(f'Priimami failų formatai: {", ".join(ALLOWED_EXTENSIONS)}.', 'alert-info')
 
     return redirect(url_for('conv.converter'))
 
@@ -89,7 +89,7 @@ def download():
         if exists( join(uploads, session['ofilepath'])):
             return send_from_directory(directory=uploads, filename=session['ofilepath'], as_attachment=True)
         else:
-            return "Error occurred. Seems the input file was not converted properly. Try again"
+            return "Įvyko klaida. Jūsų failas nebuvo sėkmingai konvertuotas. Pabandykite dar kartą."
 
 @conv.route('/reset_form', methods=['POST'])
 @login_required

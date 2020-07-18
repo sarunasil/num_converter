@@ -1,24 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
 <div class="LoginBody">
     <a href="{{ url_for('main.index') }}">
         <img id="LogoBtn"  src="{{ url_for('static', filename='img/logo.png') }}" />
     </a>
-    <h3 class="title">Login</h3>
-    <div class="box">
-        <form method="POST" action="/login" id="LoginForm">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div class="Login1">
-                <input type="text" name="username" placeholder="Username" autofocus="">
-                <input type="password" name="password" placeholder="Your Password">
-                <label class="checkbox">
-                    <input type="checkbox" name="remember">
-                    Remember me
-                </label>
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="/login" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <h3 class="text-center text-info">Prisijungimas</h3>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Vartotojo vardas:</label><br>
+                                <input type="text" name="username" id="username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Slaptažodis:</label><br>
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info"><span>Prisiminti mane</span> <span><input id="remember-me" name="remember" type="checkbox"></span></label><br>
+                                <input type="submit" name="submit" class="btn" value="Prisijungti">
+                            </div>
+                            <div id="register-link" class="text-right">
+                                <a href="https://lutex.lt/" class="text-info">Norėdami užsiregistruoti, susisiekite</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <button>Login</button>
-        </form>
+        </div>
     </div>
 </div>
+
+
+
+
 {% endblock %}

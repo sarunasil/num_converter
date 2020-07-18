@@ -1,0 +1,114 @@
+
+/* Converter */
+
+.content{
+    align-items: center;
+    min-height: 550px;
+}
+
+header{
+    max-height: 250px;
+    margin: 30px auto;
+}
+#programName{
+    text-align: center;
+}
+#LogoBtn {
+    height: 200px;
+    width: 500px;
+    margin: 15px auto;
+    display: block;
+}
+
+main.converterContents {
+    height: auto;
+    align-items: start;
+}
+
+#itemsCount,
+#buttons {
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 20px;
+}
+#itemsCountLeft,
+#itemsCountRight {
+    width: 49%;
+    display:inline-block;
+    margin: 0;
+}
+#itemsCountLeft {
+    text-align: left;
+}
+#itemsCountRight {
+    text-align: right;
+}
+
+
+#buttons {
+    margin-top: 15px;
+    text-align: left;
+    font-size: 18px;
+}
+#File_upload{
+    font-size: 18px;
+}
+
+.chooseFile{
+  width: 100%;
+}
+
+#LabelChoose {
+    display: inline-block;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.btn,
+#LabelChoose,
+#drop_down_list {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#save_div,
+#reset_div {
+    display:inline-block;
+}
+
+#save_div{
+    float:right;
+}
+
+#reset_div {
+    float:left;
+}
+
+
+/* Sveplint */
+#lettersCountLeft {
+    width: 49%;
+    display: inline-block;
+    margin: 0;
+}
+
+#lettersCountRight {
+    width: 49%;
+    display: inline-block;
+    margin: 0;
+}
+
+.letterBox {
+    width: 90%;
+    height: 400px;
+    margin: 0 3%;
+    font-size: x-large;
+}
+
+#buttonSveplint {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 20px;
+}

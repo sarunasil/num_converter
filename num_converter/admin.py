@@ -12,7 +12,7 @@ adm = Blueprint('admin', __name__)
 @login_required
 def admin():
     if current_user.typee != 1:
-        flash("Only admin can access this page", 'alert-error')
+        flash("Šis puslapis prieinamas sistemos administratoriui", 'alert-error')
         return redirect(url_for('main.index'))
 
 
@@ -28,7 +28,7 @@ def admin():
 @login_required
 def admin_save_post():
     if current_user.typee != 1:
-        flash("Only admin can make such changes", 'alert-error')
+        flash("Šis puslapis prieinamas sistemos administratoriui", 'alert-error')
         return redirect(url_for('main.index'))
 
 
@@ -37,14 +37,14 @@ def admin_save_post():
 
     user = User.query.filter_by(username=username).first()
     if not user:
-        flash(f"User {username} doesn't exist.", 'alert-error')
+        flash(f"Vartotojas {username} neegzistuoja.", 'alert-error')
     elif len(password) < PASSWORD_MIN_LEN:
-        flash(f"Password has to be atleast {PASSWORD_MIN_LEN} symbols long.", 'alert-info')
+        flash(f"Slaptažodis privalo būti bent {PASSWORD_MIN_LEN} symbolių ilgio.", 'alert-info')
     else:
         user.password = generate_password_hash(password)
         db.session.commit()
 
-        flash(f"User '{username}' password changed successfully.", 'alert-success')
+        flash(f"Vartotojo '{username}' slaptažodis buvo sėkmingai pakeistas.", 'alert-success')
 
     return redirect(url_for('admin.admin'))
 
@@ -52,7 +52,7 @@ def admin_save_post():
 @login_required
 def admin_delete_post():
     if current_user.typee != 1:
-        flash("Only admin can make such changes", 'alert-error')
+        flash("Tik administratorius gali naudotis šia funkcija", 'alert-error')
         return redirect(url_for('main.index'))
 
 
@@ -60,11 +60,13 @@ def admin_delete_post():
 
     user = User.query.filter_by(username=username).first()
     if not user:
-        flash(f"User {username} doesn't exist.", 'alert-error')
+        flash(f"Vartoojas {username} neegzistuoja.", 'alert-error')
+    elif username == 'admin':
+        flash(f"Admnistratoriaus vartotojo ištrinti negalima!", 'alert-info')
     else:
         db.session.delete(user)
         db.session.commit()
 
-        flash(f"User '{username}' deleted successfully.", 'alert-success')
+        flash(f"Vartotojas '{username}' ištrintas sėkmingai.", 'alert-success')
 
     return redirect(url_for('admin.admin'))

@@ -25,18 +25,18 @@ def login_post():
     user = User.query.filter_by(username=username).first()
 
     if not user or not check_password_hash(user.password, password):
-        flash('Incorrect login details.','alert-info')
+        flash('Neteisingi prisijungimo duomenys.','alert-info')
         return redirect(url_for('auth.login'))
 
     login_user(user, remember=remember)
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('conv.converter'))
 
 @auth.route('/register')
 @login_required
 def register():
     #only admin can register new users
     if current_user.typee != 1:
-        flash("Only admin can register new users", 'alert-error')
+        flash("Tik administratorius gali pridėti naujus vartotojus", 'alert-error')
         return redirect(url_for('main.index'))
 
     return render_template('auth/register.html')
@@ -46,7 +46,7 @@ def register():
 def register_post():
     #only admin can register new users
     if current_user.typee != 1:
-        flash("Only admin can register new users", 'alert-error')
+        flash("Tik administratorius gali pridėti naujus vartotojus", 'alert-error')
         return redirect(url_for('main.index'))
 
     username = request.form.get('username')
@@ -55,16 +55,16 @@ def register_post():
 
     user = User.query.filter_by(username=username).first()
     if user:
-        flash('User already exists.', 'alert-info')
+        flash(f"Vartotojas '{username}' jau egzistuoja.", 'alert-info')
         return redirect(url_for('auth.register'))
     elif password != password2:
-        flash("Passwords do not match.", 'alert-info')
+        flash("Slaptažodžiai nesutampa.", 'alert-info')
         return redirect(url_for('auth.register'))
     elif len(password) < PASSWORD_MIN_LEN:
-        flash(f'Password has to be at least {PASSWORD_MIN_LEN} symbols long.', 'alert-info')
+        flash(f'Slaptažodis turi būti bent {PASSWORD_MIN_LEN} simbolių ilgio.', 'alert-info')
         return  redirect(url_for('auth.register'))
     elif not username:
-        flash('Username cannot be empty.', 'alert-info')
+        flash('Vartotojas privalo turėti prisijungimo vardą.', 'alert-info')
         return redirect(url_for('auth.register'))
 
     #create new user
@@ -74,7 +74,7 @@ def register_post():
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User registered successfully.",'alert-info')
+    flash(f"Vartotojas sėkmingai užregistruotas.",'alert-success')
     return redirect(url_for('auth.login'))
 
 
