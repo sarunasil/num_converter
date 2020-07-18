@@ -25,15 +25,15 @@ def allowed_file(filename):
 @login_required
 def converter_post():
     if 'file' not in request.files:
-        flash('No file part')
+        flash('No file found', 'alert-error')
         return redirect(url_for('conv.converter'))
     file = request.files['file']
     if file.filename == '':
-        flash('No file selected')
+        flash('No file selected', 'alert-error')
         return redirect(url_for('conv.converter'))
     export_format = request.form['export_format']
     if export_format not in EXPORT_FORMATS:
-        flash('Forbidden export format')
+        flash('Export format not supported', 'alert-info')
         return redirect(url_for('conv.converter'))
 
 
@@ -54,7 +54,7 @@ def converter_post():
         except Exception as e:
             content = set()
             converted = set()
-            flash("Failed to read or convert the file. Try again")
+            flash("Failed to read or convert the file. Try again", 'alert-info')
 
 
         ofilepath = f"{splitext(filepath)[0]}_converted.{export_format}"
@@ -66,7 +66,7 @@ def converter_post():
             elif export_format == 'docx':
                 write_word(ofilepath, converted)
         except:
-            flash("Failed to save converted file. Try again")
+            flash("Failed to save converted file. Try again", 'alert-info')
 
         #delete prev file
         os.remove(filepath)
@@ -75,7 +75,7 @@ def converter_post():
 
         return render_template('converter.html', export_formats=EXPORT_FORMATS, allowed_extensions=ALLOWED_EXTENSIONS, before_size=len(content), after_size=len(converted), selected_format=export_format)
     else:
-        flash(f'Provide file of accepted format: {", ".join(ALLOWED_EXTENSIONS)}.' )
+        flash(f'Provide file of accepted format: {", ".join(ALLOWED_EXTENSIONS)}.', 'alert-info')
 
     return redirect(url_for('conv.converter'))
 

@@ -25,7 +25,7 @@ def login_post():
     user = User.query.filter_by(username=username).first()
 
     if not user or not check_password_hash(user.password, password):
-        flash('Incorrect login details.','is-danger')
+        flash('Incorrect login details.','alert-info')
         return redirect(url_for('auth.login'))
 
     login_user(user, remember=remember)
@@ -36,7 +36,7 @@ def login_post():
 def register():
     #only admin can register new users
     if current_user.typee != 1:
-        flash("Only admin can register new users", 'is-danger')
+        flash("Only admin can register new users", 'alert-error')
         return redirect(url_for('main.index'))
 
     return render_template('auth/register.html')
@@ -46,7 +46,7 @@ def register():
 def register_post():
     #only admin can register new users
     if current_user.typee != 1:
-        flash("Only admin can register new users", 'is-danger')
+        flash("Only admin can register new users", 'alert-error')
         return redirect(url_for('main.index'))
 
     username = request.form.get('username')
@@ -55,16 +55,16 @@ def register_post():
 
     user = User.query.filter_by(username=username).first()
     if user:
-        flash('User already exists.', 'is-danger')
+        flash('User already exists.', 'alert-info')
         return redirect(url_for('auth.register'))
     elif password != password2:
-        flash("Passwords do not match.", 'is-danger')
+        flash("Passwords do not match.", 'alert-info')
         return redirect(url_for('auth.register'))
     elif len(password) < PASSWORD_MIN_LEN:
-        flash(f'Password has to be at least {PASSWORD_MIN_LEN} symbols long.', 'is-danger')
+        flash(f'Password has to be at least {PASSWORD_MIN_LEN} symbols long.', 'alert-info')
         return  redirect(url_for('auth.register'))
     elif not username:
-        flash('Username cannot be empty.', 'is-danger')
+        flash('Username cannot be empty.', 'alert-info')
         return redirect(url_for('auth.register'))
 
     #create new user
@@ -74,7 +74,7 @@ def register_post():
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User registered successfully.",'info')
+    flash("User registered successfully.",'alert-info')
     return redirect(url_for('auth.login'))
 
 

@@ -12,7 +12,7 @@ adm = Blueprint('admin', __name__)
 @login_required
 def admin():
     if current_user.typee != 1:
-        flash("Only admin can access this page", 'is-danger')
+        flash("Only admin can access this page", 'alert-error')
         return redirect(url_for('main.index'))
 
 
@@ -28,7 +28,7 @@ def admin():
 @login_required
 def admin_save_post():
     if current_user.typee != 1:
-        flash("Only admin can make such changes", 'is-danger')
+        flash("Only admin can make such changes", 'alert-error')
         return redirect(url_for('main.index'))
 
 
@@ -37,14 +37,14 @@ def admin_save_post():
 
     user = User.query.filter_by(username=username).first()
     if not user:
-        flash(f"User {username} doesn't exist.", 'is-danger')
+        flash(f"User {username} doesn't exist.", 'alert-error')
     elif len(password) < PASSWORD_MIN_LEN:
-        flash(f"Password has to be atleast {PASSWORD_MIN_LEN} symbols long.")
+        flash(f"Password has to be atleast {PASSWORD_MIN_LEN} symbols long.", 'alert-info')
     else:
         user.password = generate_password_hash(password)
         db.session.commit()
 
-        flash(f"User '{username}' password changed successfully.")
+        flash(f"User '{username}' password changed successfully.", 'alert-success')
 
     return redirect(url_for('admin.admin'))
 
@@ -52,7 +52,7 @@ def admin_save_post():
 @login_required
 def admin_delete_post():
     if current_user.typee != 1:
-        flash("Only admin can make such changes", 'is-danger')
+        flash("Only admin can make such changes", 'alert-error')
         return redirect(url_for('main.index'))
 
 
@@ -60,12 +60,11 @@ def admin_delete_post():
 
     user = User.query.filter_by(username=username).first()
     if not user:
-        pass
-        # flash(f"User {username} doesn't exist.", 'is-danger')
+        flash(f"User {username} doesn't exist.", 'alert-error')
     else:
         db.session.delete(user)
         db.session.commit()
 
-        flash(f"User '{username}' deleted successfully.")
+        flash(f"User '{username}' deleted successfully.", 'alert-success')
 
     return redirect(url_for('admin.admin'))

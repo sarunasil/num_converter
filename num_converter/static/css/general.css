@@ -1,0 +1,60 @@
+
+body {
+    background-color: #f7f7f7;
+    margin: 0 auto;
+    width: 25%;
+    min-width: 600px;
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#LogoBtn {
+    height: 200px;
+    width: 500px;
+    margin: 15px auto;
+    display: block;
+}
+
+nav.navbar{
+    border: none;
+    font-size: large;
+    margin-bottom: 0;
+}
+
+.navbar-brand{
+    font-size: larger;
+}
+
+/* Flash messages */
+.notification {
+  padding: 12px;
+  border-radius: 3px;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  border-width: 2px;
+  border-style: solid;
+  font-size: larger;
+}
+
+.alert-error {
+  border-color: #da1414;
+  background-color: #f48989;
+  color: #feefef;
+}
+
+.alert-success {
+  border-color: #287d3c;
+  background-color: #5aca75;
+  color: #edf9f0;
+}
+
+.alert-info {
+    border-color: #2e5aac;
+    background-color: #89a7e0;
+    color: #eef2fa;
+}
+
+.alert-none {
+    border-style: none;
+    visibility: hidden;
+}
