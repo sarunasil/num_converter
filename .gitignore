@@ -132,3 +132,4 @@ environment
 .vscode
 *.sqlite
 old_proj
+tests/test_files/*

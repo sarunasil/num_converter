@@ -1,11 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/admin_page.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_page.css') }}">
 <h1 class="title">
-  Admin page.
-
-  {% for username in usernames %}
-    <p>{{username}}</p>
-  {% endfor %}
+    Admin page.
 </h1>
+
+{% for username in usernames %}
+    <form method="POST" action="/admin/save" id="admin_save_form_"{{username}} onsubmit="return confirm('Really save new password for \'{{username}}\'?')">
+        <div id="user_edit_row" class="{{username}}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input type="text" name="username" value="{{username}}" readonly="readonly" class="readOnly">
+            <input id="password_{{username}}" type="password" name="password" placeholder="New Password">
+            <label>
+                <input type="checkbox" name="toggle_password" onclick="toggle_password_func('{{username}}')">
+                Show password
+            </label>
+            <button>Change password</button>
+        </div>
+    </form>
+    <form method="POST" action="/admin/delete" id="admin_delete_form_"{{username}} onsubmit="return confirm('Realy delete user \'{{username}}\'?')">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="hidden" name="username" value="{{username}}"/>
+        <button>Delete user</button>
+    </form>
+{% endfor %}
+
+<form action="{{ url_for('auth.register') }}">
+    <input type="submit" value="Add new user" />
+</form>
+
 {% endblock %}

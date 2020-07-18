@@ -6,20 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LUTEX</title>
-    {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" /> #}
-
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" /> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-    <section class="hero is-primary is-fullheight">
-
-        <div class="hero-head">
+    <section class="hero  is-fullheight">
+        <!-- <div class="hero-head"> -->
             <nav class="navbar">
                 <div class="container">
-
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                        <div class="navbar-end">
+                    <div id="navbarMenuHeroA" class=" menuWrapper navbar-menu">
+                        <div class="navbar-end menu">
                             <a href="{{ url_for('main.index') }}" class="navbar-item">
                                 Home
                             </a>
@@ -48,11 +46,6 @@
                                 Login
                             </a>
                             {% endif %}
-                            {% if current_user.is_authenticated and current_user.typee == 1 %}
-                            <a href="{{ url_for('auth.register') }}" class="navbar-item">
-                                Register new user
-                            </a>
-                            {% endif %}
                             {% if current_user.is_authenticated %}
                             <a href="{{ url_for('auth.logout') }}" class="navbar-item">
                                 Logout
@@ -62,7 +55,7 @@
                     </div>
                 </div>
             </nav>
-        </div>
+        <!-- </div> -->
 
         <div>
             {% with messages = get_flashed_messages(with_categories=true) %}

@@ -5,7 +5,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from . import db
 from .models import User
 
-PASWORD_MIN_LEN = 8
+PASSWORD_MIN_LEN = 8
 
 auth = Blueprint('auth', __name__)
 
@@ -32,19 +32,21 @@ def login_post():
     return redirect(url_for('main.profile'))
 
 @auth.route('/register')
+@login_required
 def register():
     #only admin can register new users
     if current_user.typee != 1:
-        flash("Only admin can register new users")
+        flash("Only admin can register new users", 'is-danger')
         return redirect(url_for('main.index'))
 
     return render_template('auth/register.html')
 
 @auth.route('/register', methods=['POST'])
+@login_required
 def register_post():
     #only admin can register new users
     if current_user.typee != 1:
-        flash("Only admin can register new users")
+        flash("Only admin can register new users", 'is-danger')
         return redirect(url_for('main.index'))
 
     username = request.form.get('username')
@@ -53,13 +55,13 @@ def register_post():
 
     user = User.query.filter_by(username=username).first()
     if user:
-        flash('Usern already exists.', 'is-danger')
+        flash('User already exists.', 'is-danger')
         return redirect(url_for('auth.register'))
     elif password != password2:
         flash("Passwords do not match.", 'is-danger')
         return redirect(url_for('auth.register'))
-    elif len(password) < PASWORD_MIN_LEN:
-        flash(f'Password has to be at least {PASWORD_MIN_LEN} symbols long.', 'is-danger')
+    elif len(password) < PASSWORD_MIN_LEN:
+        flash(f'Password has to be at least {PASSWORD_MIN_LEN} symbols long.', 'is-danger')
         return  redirect(url_for('auth.register'))
     elif not username:
         flash('Username cannot be empty.', 'is-danger')

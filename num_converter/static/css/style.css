@@ -1,13 +1,37 @@
 ﻿/* Mutual stuff */
 body {
     background-color: #F7F7F7;
-    max-width: 1200px;
     margin: 0 auto;
 }
 main{
     height: calc(100vh - 200px);
     min-height: 550px;
 }
+
+.converterPage {
+    align-items: center;
+    width: 25%;
+    min-width: 550px;
+}
+
+.contents {
+    min-width: 550px;
+}
+
+.navbar {
+    min-width: 550px;
+    display: flex;
+}
+
+.converterContents {
+    height: auto;
+    align-items: start;
+}
+
+.menuWrapper {
+    justify-content: center;
+}
+
 header{
     max-height: 250px;
     margin: 30px auto;
@@ -26,7 +50,6 @@ header{
 .Login1{
     font-size: x-large;
 }
-
 
 /* Convert */
 #itemsCount,
@@ -62,8 +85,61 @@ header{
     padding-left: 1.4%;
 }
 .btn {
-    font-size: 17px;
+  font-size: 20px;
 }
+
+#LabelChoose {
+    width: 100%;
+    display: inline-block;
+}
+
+.reset {
+    margin: 20px 0px 20px 0px;
+}
+
+.resetColumn {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  grid-area: a;
+}
+
+.saveColumn {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  grid-area: b;
+}
+
+.chooseFile {
+  width: 100%;
+}
+
+.upload {
+    margin:
+  width: 100%;
+}
+
+.chooseFormatColumn {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  grid-area: b;
+}
+
+.bottomBar {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    grid-template-areas: 
+    "a b"
+}
+
+.topBar {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    grid-template-areas: 
+    "a b"
+}
+
 #quietCheckBX {
     margin-bottom: 15px;
 }
