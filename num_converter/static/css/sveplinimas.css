@@ -1,24 +1,5 @@
 ﻿
 
-.content{
-    align-items: center;
-    min-height: 550px;
-}
-
-header{
-    max-height: 250px;
-    margin: 30px auto;
-}
-#programName{
-    text-align: center;
-}
-#LogoBtn {
-    height: 200px;
-    width: 500px;
-    margin: 15px auto;
-    display: block;
-}
-
 /* Sveplint */
 #lettersCountLeft {
     width: 42%;

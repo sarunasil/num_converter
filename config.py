@@ -15,6 +15,7 @@ class Config(object):
 class ProdConfig(Config):
     DEFAULT_USER = 'admin'
     DEFAULT_PASSWORD = None #change this on prod. Will break
+    SECRET_KEY = None #change this on prod. Will break
 
 class DevConfig(Config):
     DEBUG = True
