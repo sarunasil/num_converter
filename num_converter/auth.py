@@ -55,13 +55,13 @@ def register_post():
 
     user = User.query.filter_by(username=username).first()
     if user:
-        flash(f"Vartotojas '{username}' jau egzistuoja.", 'alert-info')
+        flash("Vartotojas '"+username+"' jau egzistuoja.", 'alert-info')
         return redirect(url_for('auth.register'))
     elif password != password2:
         flash("Slaptažodžiai nesutampa.", 'alert-info')
         return redirect(url_for('auth.register'))
     elif len(password) < PASSWORD_MIN_LEN:
-        flash(f'Slaptažodis turi būti bent {PASSWORD_MIN_LEN} simbolių ilgio.', 'alert-info')
+        flash("Slaptažodis turi būti bent "+ str(PASSWORD_MIN_LEN) +" simbolių ilgio.", 'alert-info')
         return  redirect(url_for('auth.register'))
     elif not username:
         flash('Vartotojas privalo turėti prisijungimo vardą.', 'alert-info')
@@ -74,7 +74,7 @@ def register_post():
     db.session.add(new_user)
     db.session.commit()
 
-    flash(f"Vartotojas sėkmingai užregistruotas.",'alert-success')
+    flash("Vartotojas sėkmingai užregistruotas.",'alert-success')
     return redirect(url_for('auth.login'))
 
 

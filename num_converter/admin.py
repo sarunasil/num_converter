@@ -37,14 +37,14 @@ def admin_save_post():
 
     user = User.query.filter_by(username=username).first()
     if not user:
-        flash(f"Vartotojas {username} neegzistuoja.", 'alert-error')
+        flash("Vartotojas "+ username +" neegzistuoja.", 'alert-error')
     elif len(password) < PASSWORD_MIN_LEN:
-        flash(f"Slaptažodis privalo būti bent {PASSWORD_MIN_LEN} symbolių ilgio.", 'alert-info')
+        flash("Slaptažodis privalo būti bent "+str(PASSWORD_MIN_LEN)+" symbolių ilgio.", 'alert-info')
     else:
         user.password = generate_password_hash(password)
         db.session.commit()
 
-        flash(f"Vartotojo '{username}' slaptažodis buvo sėkmingai pakeistas.", 'alert-success')
+        flash("Vartotojo '"+ username +"' slaptažodis buvo sėkmingai pakeistas.", 'alert-success')
 
     return redirect(url_for('admin.admin'))
 
@@ -60,13 +60,13 @@ def admin_delete_post():
 
     user = User.query.filter_by(username=username).first()
     if not user:
-        flash(f"Vartoojas {username} neegzistuoja.", 'alert-error')
+        flash("Vartoojas "+ username +" neegzistuoja.", 'alert-error')
     elif username == 'admin':
-        flash(f"Admnistratoriaus vartotojo ištrinti negalima!", 'alert-info')
+        flash("Admnistratoriaus vartotojo ištrinti negalima!", 'alert-info')
     else:
         db.session.delete(user)
         db.session.commit()
 
-        flash(f"Vartotojas '{username}' ištrintas sėkmingai.", 'alert-success')
+        flash("Vartotojas '"+username+"' ištrintas sėkmingai.", 'alert-success')
 
     return redirect(url_for('admin.admin'))

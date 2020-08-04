@@ -25,11 +25,11 @@ def allowed_file(filename):
 @login_required
 def converter_post():
     if 'file' not in request.files:
-        flash('No file found', 'alert-error')
+        flash('Nerastas joks failas', 'alert-error')
         return redirect(url_for('conv.converter'))
     file = request.files['file']
     if file.filename == '':
-        flash('No file selected', 'alert-error')
+        flash('Nepasirinktas joks failas', 'alert-error')
         return redirect(url_for('conv.converter'))
     export_format = request.form['export_format']
     if export_format not in EXPORT_FORMATS:
@@ -57,7 +57,7 @@ def converter_post():
             flash("Įvyko klaida, nebuvo įmanoma perskaityti įkelto failo. Pabandykite dar kartą.", 'alert-info')
 
 
-        ofilepath = f"{splitext(filepath)[0]}_converted.{export_format}"
+        ofilepath = splitext(filepath)[0] +"_converted." + export_format
         try:
             if export_format == 'txt':
                 write_txt(ofilepath, converted)
@@ -75,7 +75,7 @@ def converter_post():
 
         return render_template('converter.html', export_formats=EXPORT_FORMATS, allowed_extensions=ALLOWED_EXTENSIONS, before_size=len(content), after_size=len(converted), selected_format=export_format)
     else:
-        flash(f'Priimami failų formatai: {", ".join(ALLOWED_EXTENSIONS)}.', 'alert-info')
+        flash("Priimami failų formatai: " + {", ".join(ALLOWED_EXTENSIONS)} + ".", 'alert-info')
 
     return redirect(url_for('conv.converter'))
 
