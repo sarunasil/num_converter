@@ -38,11 +38,16 @@ def converter_post():
 
 
     if file and allowed_file(file.filename):
+        FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+        # absolute path to this file's root directory
+        PARENT_DIR = os.path.join(FILE_DIR, os.pardir)
+
         filename = secure_filename(file.filename)
-        filepath = join(current_app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
+        filepath = join(PARENT_DIR, current_app.config['UPLOAD_FOLDER'], filename)
 
         try:
+            file.save(filepath)
+
             if filename.endswith('txt'):
                 content = read_txt(filepath)
             elif filename.endswith('xls') or filename.endswith('xlsx'):
@@ -51,25 +56,26 @@ def converter_post():
                 content = read_word(filepath)
 
             converted = convert(content)
+
+            ofilepath = splitext(filepath)[0] +"_converted." + export_format
+            try:
+                if export_format == 'txt':
+                    write_txt(ofilepath, converted)
+                elif export_format == 'xlsx' or export_format == 'xls':
+                    write_excel(ofilepath, converted)
+                elif export_format == 'docx':
+                    write_word(ofilepath, converted)
+            except:
+                flash("Nepavyko išsaugoti konvertuoto failo. Pabandykite dar kartą.", 'alert-info')
+
+            #delete prev file
+            os.remove(filepath)
+
         except Exception as e:
             content = set()
             converted = set()
             flash("Įvyko klaida, nebuvo įmanoma perskaityti įkelto failo. Pabandykite dar kartą.", 'alert-info')
 
-
-        ofilepath = splitext(filepath)[0] +"_converted." + export_format
-        try:
-            if export_format == 'txt':
-                write_txt(ofilepath, converted)
-            elif export_format == 'xlsx' or export_format == 'xls':
-                write_excel(ofilepath, converted)
-            elif export_format == 'docx':
-                write_word(ofilepath, converted)
-        except:
-            flash("Nepavyko išsaugoti konvertuoto failo. Pabandykite dar kartą.", 'alert-info')
-
-        #delete prev file
-        os.remove(filepath)
 
         session['ofilepath'] = basename(ofilepath)
 
