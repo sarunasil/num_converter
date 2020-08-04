@@ -38,12 +38,9 @@ def converter_post():
 
 
     if file and allowed_file(file.filename):
-        FILE_DIR = os.path.dirname(os.path.abspath(__file__))
-        # absolute path to this file's root directory
-        PARENT_DIR = os.path.join(FILE_DIR, os.pardir)
 
         filename = secure_filename(file.filename)
-        filepath = join(PARENT_DIR, current_app.config['UPLOAD_FOLDER'], filename)
+        filepath = join(current_app.config['UPLOAD_FOLDER'], filename)
 
         try:
             file.save(filepath)
@@ -90,7 +87,7 @@ def converter_post():
 def download():
 
     if session['ofilepath']:
-        uploads = join(os.getcwd(), current_app.config['UPLOAD_FOLDER'])
+        uploads = current_app.config['UPLOAD_FOLDER']
 
         if exists( join(uploads, session['ofilepath'])):
             return send_from_directory(directory=uploads, filename=session['ofilepath'], as_attachment=True)

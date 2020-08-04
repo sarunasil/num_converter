@@ -1,4 +1,4 @@
-
+import os
 
 class Config(object):
     DEBUG = False
@@ -7,7 +7,9 @@ class Config(object):
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///instance/prod-db.sqlite'
 
-    UPLOAD_FOLDER = "uploads"
+    # absolute path to this file's root directory
+    FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+    UPLOAD_FOLDER = os.path.join(FILE_DIR, "uploads")
 
     REMEBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_SECURE = True
