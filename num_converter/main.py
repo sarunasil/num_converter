@@ -10,7 +10,10 @@ def default(path):
 
 @main.route('/')
 def index():
-    return render_template('index.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('conv.converter'))
+    else:
+        return render_template('index.html')
 
 
 @main.route('/sveplinimas', methods=['GET'])
